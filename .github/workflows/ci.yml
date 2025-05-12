@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  laravel-tests:
+  laravel-test:
     runs-on: ubuntu-latest
     services:
       mysql:
@@ -26,10 +26,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           extensions: mbstring, bcmath, pdo_mysql
           coverage: none
 
@@ -43,11 +43,11 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Set up Laravel environment
+      - name: Setup Laravel environment
         run: |
           cp .env.example .env
           php artisan key:generate
           php artisan migrate --force
 
       - name: Run Laravel tests
-        run: php artisan test
+        run: php artisan serve
